@@ -6,5 +6,7 @@ Rails.application.routes.draw do
   resources :users,only: [:show,:index,:edit,:update]
   resources :books
   resources :favorite
+  post 'book/:id' => 'favorites#create', as: 'create_like'
+  delete 'book/:id' => 'favorites#destroy', as: 'destroy_like'
   root 'homes#top'
 end

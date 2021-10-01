@@ -16,6 +16,22 @@
         </td>
         <td><%= link_to book.title, book_path(book), class: "book_#{book.id}" %></td>
         <td><%= book.body %></td>
+        <td>
+          <% if current_user.favorited_by?(@user.id) %>
+           <td>
+            <%= link_to " ", destroy_like_path(@books), class: "fas fa-heart", method: :DELETE %>
+            <i class="fas fa-heart"></i>
+           </td>
+           <% else %>
+            <%= link_to " ", create_like_path(@books), class: "fas fa-heart", method: :POST %>
+           <td>
+           </td>
+          <% end %>
+          <td>
+            コメント数
+          </td>
+        </td>
+        </td>
         <td></td>
       </tr>
     <% end %>
