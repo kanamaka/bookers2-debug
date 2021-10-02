@@ -25,7 +25,8 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @users_id = params[:id]
     @user = @book.user
-    @favorite = Favorite.new
+    @comment = Comment.new
+    @comments = @book.comments.includes(:user)
   end
 
   def destroy
@@ -52,6 +53,10 @@ class BooksController < ApplicationController
     else
       redirect_to books_path
     end
+  end
+  
+  def favorited_by?(user)
+    favorites.where(user_id: user.id).exists?
   end
 
   private

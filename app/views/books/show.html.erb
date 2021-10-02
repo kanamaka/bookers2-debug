@@ -3,7 +3,7 @@
     <div class='col-md-3'>
     <table class='table'>
       <h2>
-        User iasddddddddnfo
+        User info
       </h2>
       <tr>
       <%= attachment_image_tag @user,:profile_image,fallback: " ", size: "100x100" %>
@@ -55,12 +55,36 @@
           </td>
           <td><%= link_to @book.title, book_path(@book) %></td>
           <td><%= @book.body %></td>
-          <% if @book.user.id == current_user.id %>
-          <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
-          <td><%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
+          <td>
+          <% if current_user.favorited_by?(@book.id) %>
+           <td>
+            <%= link_to " ", destroy_favorite_path(@book), method: :DELETE, remote: true, class: "fas fa-heart delete-btn" %>
+            <%= @book.favorites.count %>
+           </td>
+          <% else %>
+            <%= link_to " ", create_favorite_path(@book), method: :POST, remote: true, class: "fas fa-heart like-btn" %>
+            <%= @book.favorites.count %>
           <% end %>
+          <td>
+            コメント数
+            <% if @comments %>
+             <% @comments.each do |comment| %>
+             <%= link_to @comment.user.name, user_path(comment.user_id) %>
+             <%= comment.text %>
+             <% end %>
+            <% end %>
+          </td>
+          </tr>
         </tr>
-      </table>
+        </table>
+        <div class="form-group">
+          <% if current_user %>
+          <%= form_with(model: [@book, @comment], local: true) do |form| %>
+          <%= form.text_area :text, placeholder: " ", rows: 10 %><br>
+          <%= form.submit "送信" %>
+          <% end %>
+          <% end %>
+        </div>
     </div>
   </div>
 </div>
