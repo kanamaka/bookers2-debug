@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  
   def new
     @book = Book.new
   end
@@ -18,6 +19,7 @@ class BooksController < ApplicationController
     @books = Book.all
     @book = Book.new
     @user = current_user
+    @comments = @book.comments
   end
 
   def show
@@ -25,8 +27,8 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @users_id = params[:id]
     @user = @book.user
-    @comment = Comment.new
-    @comments = @book.comments.includes(:user)
+    @comments = @book.comments
+    @comment = @book.comments.build
   end
 
   def destroy

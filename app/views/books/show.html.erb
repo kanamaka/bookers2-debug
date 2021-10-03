@@ -54,8 +54,17 @@
             <% end %>
           </td>
           <td><%= link_to @book.title, book_path(@book) %></td>
-          <td><%= @book.body %></td>
           <td>
+            <%= @book.body %>
+          </td>
+          <td>
+            <% if @book.user.id == current_user.id %>
+              <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-block" %>
+              </td>
+              <td>
+               <%= link_to "Destroy", book_path(@book.id), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger btn-block"  %>
+              </td>
+            <% end %>
           <% if current_user.favorited_by?(@book.id) %>
            <td>
             <%= link_to " ", destroy_favorite_path(@book), method: :DELETE, remote: true, class: "fas fa-heart delete-btn" %>
@@ -66,23 +75,22 @@
             <%= @book.favorites.count %>
           <% end %>
           <td>
-            コメント数
-            <% if @comments %>
-             <% @comments.each do |comment| %>
-             <%= link_to @comment.user.name, user_path(comment.user_id) %>
-             <%= comment.text %>
-             <% end %>
-            <% end %>
+            コメント件数 <%= @comments.count %>
           </td>
           </tr>
         </tr>
         </table>
+        <% @comments.each do |comment| %>
+             <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %>
+             <%= comment.comment %>
+             <% if comment.user == current_user %>
+             <%= link_to "削除", book_comments_path(comment.book, comment), method: :delete, class: "btn-sm btn-danger" %><br>
+             <% end %>
+            <% end %>
         <div class="form-group">
-          <% if current_user %>
-          <%= form_with(model: [@book, @comment], local: true) do |form| %>
-          <%= form.text_area :text, placeholder: " ", rows: 10 %><br>
-          <%= form.submit "送信" %>
-          <% end %>
+          <%= form_with(model:[@book, @comment], local: true) do |f| %>
+          <%= f.text_area :comment, :size=>"100x3",placeholder: " " %>
+          <%= f.submit "送信する", class: "btn btn-success mb-4" %>
           <% end %>
         </div>
     </div>
