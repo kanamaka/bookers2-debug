@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @books = @user.books
     @book = Book.new
     @users = User.new
-
+    @comments = @book.comments
   end
 
   def destroy

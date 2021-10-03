@@ -45,6 +45,14 @@
       <% end %>
     </div>
     <div class='col-md-8 offset-md-1'>
+      <% if @comment.errors.any? %>
+      <%= @comment.errors.count %>
+      <% @comment.errors.full_messages.each do |message| %>
+      <li class="text-danger">
+       <%= message %>
+      </li>
+      <% end %>
+      <% end %>
   		<h2>Book detail</h2>
   		<table class='table'>
   		  <tr>
@@ -68,25 +76,28 @@
           <% if current_user.favorited_by?(@book.id) %>
            <td>
             <%= link_to " ", destroy_favorite_path(@book), method: :DELETE, remote: true, class: "fas fa-heart delete-btn" %>
-            <%= @book.favorites.count %>
+            <tr>
+              <%= @book.favorites.count %>
+            </tr>
            </td>
           <% else %>
             <%= link_to " ", create_favorite_path(@book), method: :POST, remote: true, class: "fas fa-heart like-btn" %>
-            <%= @book.favorites.count %>
+            <tr>
+              <%= @book.favorites.count %>
+            </tr>
           <% end %>
           <td>
-            コメント件数 <%= @comments.count %>
           </td>
           </tr>
         </tr>
         </table>
         <% @comments.each do |comment| %>
-             <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %>
-             <%= comment.comment %>
-             <% if comment.user == current_user %>
-             <%= link_to "削除", book_comments_path(comment.book, comment), method: :delete, class: "btn-sm btn-danger" %><br>
-             <% end %>
-            <% end %>
+         <td>
+          <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %>
+         </td>
+          <%= comment.comment %>><br>
+          <%= link_to "削除", comment_path(comment.book, comment), method: :delete, class: "btn-sm btn-danger" %><br>
+          <% end %>
         <div class="form-group">
           <%= form_with(model:[@book, @comment], local: true) do |f| %>
           <%= f.text_area :comment, :size=>"100x3",placeholder: " " %>

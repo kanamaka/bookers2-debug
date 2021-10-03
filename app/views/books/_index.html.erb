@@ -17,20 +17,26 @@
         </td>
         <td><%= link_to book.title, book_path(book), class: "book_#{book.id}" %></td>
         <td><%= book.body %></td>
-          <% if current_user.favorited_by?(book.id) %>
-           <td>
+          <% if current_user.favorited_by?(@book.id) %>
+            <td>
             <%= link_to " ", destroy_favorite_path(book), method: :DELETE, remote: true, class: "fas fa-heart delete-btn" %>
-            <%= book.favorites.count %>
+            <td>
+              <%= book.favorites.count %>
+            </td>
            </td>
            <% else %>
             <%= link_to " ", create_favorite_path(book), method: :POST, remote: true, class: "fas fa-heart like-btn" %>
-            <%= book.favorites.count %>
+            <td>
+              <%= book.favorites.count %>
+            </td>
           <% end %>
           <td>
           </td>
         </td>
         </td>
-        <td></td>
+        <td>
+          
+        </td>
       </tr>
     <% end %>
   </tbody>

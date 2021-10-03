@@ -19,7 +19,6 @@ class BooksController < ApplicationController
     @books = Book.all
     @book = Book.new
     @user = current_user
-    @comments = @book.comments
   end
 
   def show
@@ -29,6 +28,7 @@ class BooksController < ApplicationController
     @user = @book.user
     @comments = @book.comments
     @comment = @book.comments.build
+    @comment_id = params[:id]
   end
 
   def destroy
