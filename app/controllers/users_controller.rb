@@ -14,6 +14,8 @@ class UsersController < ApplicationController
    else
      render :create
    end
+   current_user.follow(params[:user_id])
+   redirect_to request.referer
    end
 
   def index
@@ -35,6 +37,8 @@ class UsersController < ApplicationController
     @book = Book.find(params[:id])
     @book.destroy
     redirect_to books_path
+    current_user.unfollow(params[:user_id])
+    redirect_to request.referer  
   end
 
   def update
@@ -52,7 +56,16 @@ class UsersController < ApplicationController
     redirect_to user_path(current_user.id)
     end
   end
+  def followings
+    user = User.find(params[:user_id])
+    @users = user.followings
+  end
 
+  def followers
+    user = User.find(params[:user_id])
+    @users = user.followers
+  end
+ 
   private
 
   def user_params

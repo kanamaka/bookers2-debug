@@ -16,6 +16,25 @@
 	    <%= user.introduction %>
 	  </th>
   </tr>
+  <tr>
+  	<th>
+	  	follows
+	  </th>
+	  <th>
+	  	user_followings
+	  	<%= link_to "フォロー", user_relationships_path(user.id) %>
+	  	<%= user.followings.count %>
+	  </th>
+  </tr>
+  <tr>
+  	<th>
+	  	followers
+	  </th>
+	  <th>
+	  	<%= link_to "俺をフォローしてる人", relationships_path(user.id) %>
+	  	<%= user.followers.count %>
+	  </th>
+  </tr>
 </table>
 
 <div class='row'>
