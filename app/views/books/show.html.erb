@@ -1,6 +1,16 @@
 <div class='container'>
   <div class='row'>
     <div class='col-md-3'>
+      <% if @error_comment.present? %>
+      <div id="error_explanation">
+      <h2><%= @error_comment.errors.count %></h2>
+      <ul>
+        <% @error_comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
     <table class='table'>
       <h2>
         User info
@@ -45,14 +55,6 @@
       <% end %>
     </div>
     <div class='col-md-8 offset-md-1'>
-      <% if @comment.errors.any? %>
-      <%= @comment.errors.count %>
-      <% @comment.errors.full_messages.each do |message| %>
-      <li class="text-danger">
-       <%= message %>
-      </li>
-      <% end %>
-      <% end %>
   		<h2>Book detail</h2>
   		<table class='table'>
   		  <tr>
@@ -76,27 +78,29 @@
           <% if current_user.favorited_by?(@book.id) %>
            <td>
             <%= link_to " ", destroy_favorite_path(@book), method: :DELETE, remote: true, class: "fas fa-heart delete-btn" %>
-            <tr>
+            <td>
               <%= @book.favorites.count %>
-            </tr>
+            </td>
            </td>
           <% else %>
+            <td>
             <%= link_to " ", create_favorite_path(@book), method: :POST, remote: true, class: "fas fa-heart like-btn" %>
-            <tr>
+            <td>
               <%= @book.favorites.count %>
-            </tr>
+            </td>
           <% end %>
           <td>
+            コメント件数 <%= @comments.count %>
           </td>
           </tr>
         </tr>
         </table>
         <% @comments.each do |comment| %>
-         <td>
-          <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %>
-         </td>
-          <%= comment.comment %>><br>
-          <%= link_to "削除", comment_path(comment.book, comment), method: :delete, class: "btn-sm btn-danger" %><br>
+          <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>
+          <%= comment.comment %>
+          <% if @user.id == current_user.id %>
+          <%= link_to "Destroy", comment_path(comment.book, comment), method: :delete, class: "btn-sm btn-danger" %><br>
+          <% end %>
           <% end %>
         <div class="form-group">
           <%= form_with(model:[@book, @comment], local: true) do |f| %>

@@ -1,11 +1,14 @@
 class CommentsController < ApplicationController
 def create
- flash[:notice] = "コメントの投稿に成功"
  @book = Book.find(params[:book_id])
  @comment = current_user.comments.new(comment_params)
  @comment.book_id = @book.id
- @comment.save
- redirect_to book_path(@book)
+ if @comment.save
+  redirect_back(fallback_location: root_path)
+ else
+  @error_comment = @comment
+  redirect_back(fallback_location: root_path)
+ end
 end
 
 def destroy
