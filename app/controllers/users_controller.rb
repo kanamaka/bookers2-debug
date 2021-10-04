@@ -5,18 +5,18 @@ class UsersController < ApplicationController
     flash[:notice] = "Welcome! You have signed up successfully."
   end
 
-   def create
+  def create
     flash[:notice] = "You have created book successfully."
     @user = Users.new(users_params)
     @user.users_id = current_users.id
-   if @user.save
+  if @user.save
     redirect_to books_path
-   else
+  else
      render :create
-   end
+  end
    current_user.follow(params[:user_id])
    redirect_to request.referer
-   end
+  end
 
   def index
     @book = Book.new
@@ -71,6 +71,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
+  
   def ensure_correct_user
     @user = User.find(params[:id])
     unless @user == current_user

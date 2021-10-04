@@ -12,14 +12,16 @@
         <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %></td>
         <td><%= user.name %></td>
         <td><%= link_to 'Show', user_path(user), class: "user_#{user.id}" %></td>
+        <% unless current_user == user %>
         <% if current_user.following?(user) %>
         <td>
-          <%= link_to "フォロー", user_relationships_path(user.id), method: :DELETE, remote: true %>
+          <%= link_to "フォローしない", user_relationships_path(user.id), method: :DELETE, remote: true %>
         </td>
         <% else %>
         <td>
-          <%= link_to "フォローしない", user_relationships_path(user.id), method: :POST, remote: true %>
+          <%= link_to "フォロー", user_relationships_path(user.id), method: :POST, remote: true %>
         </td>
+        <% end %>
         <% end %>
       </tr>
     <% end %>

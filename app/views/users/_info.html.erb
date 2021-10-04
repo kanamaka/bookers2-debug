@@ -21,9 +21,9 @@
 	  	follows
 	  </th>
 	  <th>
-	  	user_followings
-	  	<%= link_to "フォロー", user_relationships_path(user.id) %>
+	  	<%= link_to user_follow_path(user.id) do %>
 	  	<%= user.followings.count %>
+	  	<% end %>
 	  </th>
   </tr>
   <tr>
@@ -31,11 +31,21 @@
 	  	followers
 	  </th>
 	  <th>
-	  	<%= link_to "俺をフォローしてる人", relationships_path(user.id) %>
+	  	<%= link_to user_followers_path(user.id) do %>
 	  	<%= user.followers.count %>
+	  	<% end %>
 	  </th>
   </tr>
 </table>
+  <th>
+  	<% unless current_user == user %>
+  	<% if current_user.following?(user) %>
+  	<%= link_to "フォローしない", user_relationships_path(user.id), method: :delete, class: 'btn btn-info btn-lg' %>
+　　<% else %>
+  　<%= link_to "フォローする", user_relationships_path(user.id), method: :post, class: 'btn btn-success btn-lg' %>
+　　<% end %>
+　　<% end %>
+　</th>
 
 <div class='row'>
   <%= link_to '',edit_user_path(user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user" %>
