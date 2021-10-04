@@ -22,6 +22,8 @@ class UsersController < ApplicationController
     @book = Book.new
     @users = User.all
     @user = current_user
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true)
   end
 
   def show

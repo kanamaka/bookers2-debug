@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   post 'book/:id' => 'favorites#create', as: 'create_favorite'
   delete 'book/:id' => 'favorites#destroy', as: 'destroy_favorite'
   root 'homes#top'
+  get '/search' => 'search#search'
 end
