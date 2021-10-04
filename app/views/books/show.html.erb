@@ -98,7 +98,7 @@
         <% @comments.each do |comment| %>
           <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>
           <%= comment.comment %>
-          <% if @user.id == current_user.id %>
+          <% if comment.user_id == current_user.id %>
           <%= link_to "Destroy", comment_path(comment.book, comment), method: :delete, class: "btn-sm btn-danger" %><br>
           <% end %>
           <% end %>
