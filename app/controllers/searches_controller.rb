@@ -8,32 +8,32 @@ class SearchesController < ApplicationController
 
 private
 def match(model, value)
- if model == 'user'
+ if model == 'User'
    User.where(name: value)
- elsif model == 'book'
+ elsif model == 'Book'
    Book.where(title: value)
  end
 end
 def forward(model, value)
  if model == 'User'
-　 User.where("name LIKE ?", "#{value}%")
- elsif model == 'book'
+   User.where("name LIKE ?", "#{value}%")
+ elsif model == 'Book'
    Book.where("title LIKE ?", "#{value}%")
  end
 end
 
 def backward(model, value)
- if model == 'user'
+ if model == 'User'
    User.where("name LIKE ?", "%#{value}")
- elsif model == 'book'
+ elsif model == 'Book'
    Book.where("title LIKE ?", "%#{value}")
  end
 end
 
 def partical(model, value)
- if model == 'user'
+ if model == 'User'
    User.where("name LIKE ?", "%#{value}%")
- elsif model == 'book'
+ elsif model == 'Book'
    Book.where("title LIKE ?", "%#{value}%")
  end
 end
