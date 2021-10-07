@@ -10,10 +10,9 @@ Rails.application.routes.draw do
   end
   resources :relationships, only: [:index]
   resources :books  do
-   resource :comments, only: [:create]
+   resources :comments, only: [:create, :destroy]
+   resource :favorite, only: [:create, :destroy]
   end
-  resources :comments, only: [:destroy]
-  resources :favorite, only: [:create, :destroy]
   post 'book/:id' => 'favorites#create', as: 'create_favorite'
   delete 'book/:id' => 'favorites#destroy', as: 'destroy_favorite'
   root 'homes#top'

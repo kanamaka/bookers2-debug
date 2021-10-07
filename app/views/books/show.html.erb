@@ -55,58 +55,15 @@
       <% end %>
     </div>
     <div class='col-md-8 offset-md-1'>
-  		<h2>Book detail</h2>
-  		<table class='table'>
-  		  <tr>
-  		    <td><%= link_to user_path(@book.user) do %>
-            <%= attachment_image_tag(@book.user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %><br>
-            <%= @book.user.name %>
-            <% end %>
-          </td>
-          <td><%= link_to @book.title, book_path(@book) %></td>
-          <td>
-            <%= @book.body %>
-          </td>
-          <td>
-            <% if @book.user.id == current_user.id %>
-              <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-block" %>
-              </td>
-              <td>
-               <%= link_to "Destroy", book_path(@book.id), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger btn-block"  %>
-              </td>
-            <% end %>
-          <% if current_user.favorited_by?(@book.id) %>
-           <td>
-            <%= link_to " ", destroy_favorite_path(@book), method: :DELETE, remote: true, class: "fas fa-heart delete-btn" %>
-            <td>
-              <%= @book.favorites.count %>
-            </td>
-           </td>
-          <% else %>
-            <td>
-            <%= link_to " ", create_favorite_path(@book), method: :POST, remote: true, class: "fas fa-heart like-btn" %>
-            <td>
-              <%= @book.favorites.count %>
-            </td>
-          <% end %>
-          <td>
-            コメント件数 <%= @comments.count %>
-          </td>
-          </tr>
-        </tr>
-        </table>
-        <% @comments.each do |comment| %>
-          <%= attachment_image_tag(@user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>
-          <%= comment.comment %>
-          <% if comment.user_id == current_user.id %>
-          <%= link_to "Destroy", comment_path(comment.book, comment), method: :delete, class: "btn-sm btn-danger" %><br>
-          <% end %>
-          <% end %>
-        <div class="form-group">
-          <%= form_with(model:[@book, @comment], local: true) do |f| %>
-          <%= f.text_area :comment, :size=>"100x3",placeholder: " " %>
-          <%= f.submit "送信する", class: "btn btn-success mb-4" %>
-          <% end %>
+  		<h2>
+  		  Book detail
+  		</h2>
+  		<td id="favorite_buttons" >
+        <%= render 'books/show-favorites', books: @books %>
+      </td>
+      <td id="comment_button">
+        <%= render 'books/show-comment', comments: @comments %>
+      </td>
         </div>
     </div>
   </div>

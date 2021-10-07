@@ -4,20 +4,17 @@ def create
  @comment = current_user.comments.new(comment_params)
  @comment.book_id = @book.id
  if @comment.save
-  redirect_back(fallback_location: root_path)
  else
   @error_comment = @comment
-  redirect_back(fallback_location: root_path)
  end
 end
 
 def destroy
  flash[:notice] = "コメントの削除に成功"
- #@book = Book.find(params[:book_id])
+ @book = Book.find(params[:book_id])
  #@comment = Comment.find_by(book_id: params[:book_id])
  #@comment.destroy
- Comment.find_by(params[:id]).destroy
- redirect_back(fallback_location: root_path)
+ Comment.find(params[:id]).destroy
 end
 
 private
