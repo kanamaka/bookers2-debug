@@ -58,13 +58,13 @@
   		<h2>
   		  Book detail
   		</h2>
-  		<td id="favorite_buttons" >
-        <%= render 'books/show-favorites', books: @books %>
+  		<td class=<% 'favorite_buttons_' + @book.id.to_s %> >
+        <%= render 'books/show-favorites', books: @book %>
       </td>
-      <td id="comment_button">
-        <%= render 'books/show-comment', comments: @comments %>
+      <td class=<% 'comment_button_' + + @book.id.to_s %> >
+        <%= render 'books/show-comment', comments: @comment %>
       </td>
-        </div>
+    </div>
     </div>
   </div>
 </div>
