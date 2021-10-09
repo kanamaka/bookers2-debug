@@ -1,1 +1,2 @@
-$('.comments_buttons_' + <%= @book.id %>).html("<%= j(render "books/show-comment", book: @book) %>");
+$("#comment").html("<%= j(render(partial: 'books/show-comment', locals: {comments: @comments})) %>")
+$("textarea").val('')

@@ -58,12 +58,12 @@
   		<h2>
   		  Book detail
   		</h2>
-  		<td class=<% 'favorite_buttons_' + @book.id.to_s %> >
+  		<div class=<% 'favorite_buttons_' + @book.id.to_s %> >
         <%= render 'books/show-favorites', books: @book %>
-      </td>
-      <td class=<% 'comment_button_' + + @book.id.to_s %> >
-        <%= render 'books/show-comment', comments: @comment %>
-      </td>
+      </div>
+      <div id="comment" class=<% 'comment_button_' +  @book.id.to_s %> >
+        <%= render partial: 'books/show-comment', locals: {comments: @comments} %>
+      </div>
     </div>
     </div>
   </div>

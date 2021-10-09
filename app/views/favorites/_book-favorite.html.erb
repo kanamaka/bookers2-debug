@@ -1,15 +1,7 @@
 <% if current_user.favorited_by?(book.id) %>
-<td>
 <%= link_to " ", book_favorite_path(book), method: :DELETE, remote: true, class: "fas fa-heart delete-btn" %>
-<td>
 <%= book.favorites.count %>
-</td>
-</td>
 <% else %>
-<td>
 <%= link_to " ", book_favorite_path(book), method: :POST, remote: true, class: "fas fa-heart like-btn" %>
-</td>
-<td>
 <%= book.favorites.count %>
-</td>
 <% end %>

@@ -1,5 +1,5 @@
 <div class="form-group">
-<%= form_with model:[@book, @comment] do |f| %>
+<%= form_with model:[@book, @comment], remote: true do |f| %>
 <%= f.text_area :comment, :size=>"100x3",placeholder: " " %>
 <%= f.submit "送信する", class: "btn btn-success mb-4" %>
 <% end %>
