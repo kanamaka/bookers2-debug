@@ -1,9 +1,9 @@
 class FavoritesController < ApplicationController
 
   def create
+    @user = current_user
     @book = Book.find(params[:book_id])
     Favorite.create(user_id: current_user.id, book_id: params[:book_id])
-    render 'create.js.erb'
     #@book = Book.find(params[:book_id])
     #@favorite = Current_user.favorite.new(book_id: books.id)
     #@favorite.save
@@ -13,9 +13,10 @@ class FavoritesController < ApplicationController
   end
   
   def destroy
+    @user = current_user
     @book = Book.find(params[:book_id])
     Favorite.find_by(user_id: current_user.id, book_id: params[:book_id]).destroy
-    render 'destroy.js.erb'
+    #render 'destroy.js.erb'
     #@book = Book.find(params[:book_id])
     #@favorite = current_user.favorites.find_by(book_id: book.id)
     #@favorite.destroy

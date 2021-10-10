@@ -58,9 +58,36 @@
   		<h2>
   		  Book detail
   		</h2>
-  		<div class=<% 'favorite_buttons_' + @book.id.to_s %> >
-        <%= render 'books/show-favorites', books: @book %>
-      </div>
+  		<table class='table'>
+  		<tr>
+  		    <td><%= link_to user_path(@book.user) do %>
+            <%= attachment_image_tag(@book.user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %><br>
+            <%= @book.user.name %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to @book.title, book_path(@book) %>
+          </td>
+          <td>
+            <%= @book.body %>
+          </td>
+              <td>
+              <% if @book.user.id == current_user.id %>
+              <%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-block" %>
+              </td>
+              <td>
+               <%= link_to "Destroy", book_path(@book.id), method: :delete, data: {confirm: "本当に削除しますか？"}, class: "btn btn-danger btn-block"  %>
+              </td>
+            <% end %>
+            <td>
+            <div class=<%= 'favorite_buttons_' + @book.id.to_s %> >
+            <%= render 'favorites/book-favorite', book: @book, user: @user %>
+            </div>
+            </td>
+            <td>
+            コメント件数 <%= @comments.count %>
+            </td>
+            </table>
       <div id="comment" class=<% 'comment_button_' +  @book.id.to_s %> >
         <%= render partial: 'books/show-comment', locals: {comments: @comments} %>
       </div>
